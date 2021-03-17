@@ -1,15 +1,19 @@
 import React,{useState,useEffect} from 'react'
 import {Link, Route} from 'react-router-dom'
 import axios from 'axios'
+import 'bootstrap/dist/css/bootstrap.css';
+
 import FrontEndDev from './FrontEndDev'
 import NodeJsDev from './NodeJsDev'
 import MeanStackDev from './MeanStack'
 import FullStackDev from './FullStack'
+import './modal.css'
 
 const AdminDashboard = (props) => {
     const [candidates, setCandidates] = useState([])
     const [jobStatus,setJobStatus] = useState(false)
-
+    const [modal,setModal] = useState({})
+    const [toggle, setToggle] = useState(false)
     const url = 'https://dct-application-form.herokuapp.com'
 
     useEffect(() => {
@@ -51,6 +55,7 @@ const AdminDashboard = (props) => {
     }
 
     const handleView = (canData) => {
+
         const data = {
             name:canData.name,
             email: canData.email,
@@ -58,27 +63,44 @@ const AdminDashboard = (props) => {
             experience: canData.experience,
             status: canData.status
         }
-         alert(`name: ${data.name},
-                email: ${data.email},
-                skills: ${data.skills},
-                experience: ${data.experience}    
-                status: ${data.status}
-            `)
+
+        setModal(data)
+        setToggle(true)
     }
 
     return (
         <div>
             <h2>Admin Dashboard</h2>
             <h1>{candidates.length}</h1>
-            <div>
-                <p>
-                    <Link to ='/frontEndDev'>Front-End Developer</Link> |
-                    <Link to ='/nodeJsDev'>Node.js Developer</Link> |
-                    <Link to = '/meanStackDev'>MEAN Stack Developer</Link> |
-                    <Link to = '/fullStackDev'>FULL Stack Developer</Link> |
-                </p>
+            <div class='container'>
+                <div class='col-md-12'>
+                    <p>
+                        <Link class='col-md-4' to ='/frontEndDev'>Front-End Developer</Link> |
+                        <Link class='col-md-4' to ='/nodeJsDev'>Node.js Developer</Link> |
+                        <Link class='col-md-4' to = '/meanStackDev'>MEAN Stack Developer</Link> |
+                        <Link class='col-md-4' to = '/fullStackDev'>FULL Stack Developer</Link> |
+                    </p>
+                </div>
+                
             </div>
 
+            {toggle && 
+                    <div id= 'modal'>
+                        <div id = 'modal-data'>
+                            <h3>Name : {modal.name}</h3>
+                            <h3>Email: {modal.email}</h3>
+                            <h3>Skills: {modal.skills}</h3>
+                            <h3>Experience: {modal.experience}</h3>
+                            <h3>Status: {modal.status}</h3>
+
+                            <div id = 'closeBtn'>
+                                <button class = 'btn btn-danger' onClick = { () => {
+                                    setToggle(false)
+                                }}>Close</button>
+                            </div>
+                        </div>                        
+                    </div>
+            }
             
             <Route  path = "/frontEndDev" 
                     exact = {true} 

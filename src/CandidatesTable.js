@@ -1,11 +1,12 @@
 import React from 'react'
+import 'bootstrap/dist/css/bootstrap.css';
 
 const CandidatesTable = (props) => {
     const {jobTitle, handleView, handleStatusShortlist, handleStatusReject} = props
 
     return (
-        <div>
-            <table border = '1px'>
+        <div  class="table-responsive" >
+            <table class='table table-bordered table-hover'>
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -24,7 +25,7 @@ const CandidatesTable = (props) => {
                                         <td>{ele.skills}</td>
                                         <td>{ele.experience}</td>
                                         <td>{ele.createdAt.slice(0,10)}</td>
-                                        <td><button onClick = {() => {
+                                        <td><button class='btn btn-primary' onClick = {() => {
                                             handleView(ele)
                                         }}>View Details</button></td>
 
@@ -32,20 +33,20 @@ const CandidatesTable = (props) => {
                                             {
                                                 ele.status === 'applied' ? (
                                                     <div>
-                                                        <button onClick = {() => {
+                                                        <button class='btn btn-success' onClick = {() => {
                                                             handleStatusShortlist(ele)
                                                         }}>Shortlist</button>
 
-                                                        <button onClick = {() => {
+                                                        <button class='btn btn-danger' onClick = {() => {
                                                             handleStatusReject(ele)
                                                         }}>Reject</button>    
                                                     </div>
                                                     
                                                 ) : (
                                                     ele.status === 'shortlisted' ? (
-                                                        <button>Shortlisted</button>
+                                                        <button class="btn btn-info" disabled>Shortlisted</button>
                                                     ) : (
-                                                        <button>Rejected</button>  
+                                                        <button class="btn btn-info" disabled>Rejected</button>  
                                                     )
                                                     
                                                     

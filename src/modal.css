@@ -1,0 +1,34 @@
+#modal {
+    text-align: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: black;
+
+}
+
+#modal-data {
+    padding-top: 25px;
+    justify-content: center;
+    background-color: white;
+    height: 60%;
+    width: 60%;
+}
+
+#closeBtn {
+    color: #aaaaaa;
+    font-weight: bold;
+}
+
+#closeBtn:hover,
+#closeBtn:focus {
+    color: rgb(245, 10, 10);
+    text-decoration: none;
+    cursor: pointer;
+}
