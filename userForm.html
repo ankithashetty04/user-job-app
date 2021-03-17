@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>User Job Applicaion form</title>
+</head>
+<body>
+    <div id = 'root'></div>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js" integrity="sha512-rV0Q1QWodkoLjts/qP2XHtjvUPTmN46k4eH0lzOR3mDui8a0YnL/uqydipXA9mQ2wG6J4imL0BO6/26rcFho7Q==" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root')
+        const {useState,useEffect} = React
+        const {v4} = uuid
+
+        const baseUrl = 'https://dct-application-form.herokuapp.com'
+
+        const UserForm = (props) => {
+            const{isSubmitted,toggleIsSubmitted, formSubmit} = props
+
+            const jobTitleArr = ['Front-End Developer',
+                                'Node.js Developer',
+                                'MEAN Stack Developer',
+                                'FULL Stack Developer']
+
+            const [id, setId] = useState(v4())
+            const [name,setName] = useState('')
+            const [email,setEmail] = useState('')
+            const [contact,setContact] = useState('')
+            const [jobTitle,setJobTitle] = useState('')
+            const [experience,setExp] = useState('')
+            const [skills,setSkills] = useState('')
+           
+
+            useEffect(() => {
+                if(isSubmitted){
+                    setId(v4())
+                    setName('')
+                    setEmail('')
+                    setContact('')
+                    setJobTitle('')
+                    setExp('')
+                    setSkills('')
+                    toggleIsSubmitted()
+                }
+            },[isSubmitted, toggleIsSubmitted])
+ 
+            const handleChange = (e) => {
+                    //console.log('handle change' , e.target.name)
+                    const attr = e.target.name
+                    if(attr === 'name'){
+                        setName(e.target.value)
+                    }else if(attr === 'email'){
+                        setEmail(e.target.value)
+                    }else if(attr === 'contact'){
+                        setContact(e.target.value)
+                    }else if(attr === 'experience'){
+                        setExp(e.target.value)
+                    }else if(attr === 'skills'){
+                        setSkills(e.target.value)
+                    }
+                }
+
+            const handleJobTitleChange = (e) => {
+                const change = e.target.value
+                setJobTitle(change)
+               // console.log(change)
+            }
+
+
+            const handleSubmit = (e) => {
+                e.preventDefault()
+                
+
+                const formData = {
+                id : v4() ,
+                name:name,
+                email : email,
+                phone:contact,
+                jobTitle:jobTitle,
+                experience:experience,
+                skills:skills
+            }
+                formSubmit(formData)
+               // console.log('formData',formData)
+
+            }
+
+            return(
+                <div>
+                    <h2>Apply for job</h2>
+                    <form onSubmit = {handleSubmit}>
+                        <label>Full name</label>
+                        <input type="text" name = 'name' value ={name} onChange = {handleChange} required/> <br/>
+
+                        <label>Email address</label>
+                        <input type="email" name = 'email' value = {email} onChange = {handleChange} placeholder = 'example@email.com' required/><br/>
+
+                        <label>Contact Number</label>
+                        <input type= 'tel' name = 'contact' value = {contact} onChange = {handleChange} placeholder = '+91 9988554344' required/><br/>
+
+                        <label >Applying for Job</label>
+                        <select value = {jobTitle} onChange = {handleJobTitleChange}>
+                            <option value="select one">--Select--</option>
+                            {
+                                jobTitleArr.map((title,i) => {
+                                    return <option value = {title} key = {i}>{title}</option>
+                                })
+                            }
+                                
+                        </select><br/>
+
+                        <label >Experience</label>
+                        <input type="text" name = 'experience' value = {experience} onChange = {handleChange} placeholder = 'Experience (2 years, 3 months)' required/><br/>
+
+                        <label >Technical skills</label>                       
+                        <textarea type = 'textarea' name = 'skills' value = {skills} onChange = {handleChange} placeholder = 'Technical Skills' required></textarea><br/>
+
+                        <input type="submit" value = 'send application'/>
+                    </form>
+                </div>
+                
+            )
+        }
+       
+        const AddData = (props) => {
+            const {addData} = props
+            const [isSubmitted,setIsSubmitted] = useState(false)
+
+              const formSubmit = (candidateData) => {
+                axios.post(`${baseUrl}/users/application-form`, candidateData)
+                .then((res) => {
+                    //console.log('result', candidateData)
+                    const result = res.data
+                    addData(result)
+                    console.log('result',result)
+                    setIsSubmitted(true)
+                })
+                .catch((err) => {
+                    alert(err.message)
+                })
+
+                alert('application sent')
+            }
+
+            const toggleIsSubmitted = () => {
+                setIsSubmitted(!isSubmitted)
+            }
+           
+            return(
+                <div>
+                    <UserForm isSubmitted={isSubmitted}
+                     toggleIsSubmitted = {toggleIsSubmitted}
+                     formSubmit = {formSubmit}/>    
+                </div>
+            )
+
+        }
+
+        const UserContainer = () => {
+            const [candidatesData,setCandidatesData] = useState([])
+
+            const addData = (data) => {
+                setCandidatesData([...candidatesData], data)
+            }
+
+            useEffect(() => {
+                axios.get(`${baseUrl}/users/application-forms`)
+
+                .then((res) => {
+                    const data = res.data
+                    setCandidatesData(data)
+                })
+                .catch((err) => {
+                    alert(err.message)
+                })
+            },[])
+
+            return(
+                <div>
+                    <h1>Job application - {candidatesData.length}</h1>
+                    <AddData addData = {addData}/>    
+                </div>
+            )
+        }
+
+        const App = () => {
+            return(
+                <div>
+                    <UserContainer/>    
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App/>, rootHandle)
+        
+    </script>
+    
+</body>
+</html>
