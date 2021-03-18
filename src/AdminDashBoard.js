@@ -2,12 +2,12 @@ import React,{useState,useEffect} from 'react'
 import {Link, Route} from 'react-router-dom'
 import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.css';
-
+import './modal.css'
 import FrontEndDev from './FrontEndDev'
 import NodeJsDev from './NodeJsDev'
 import MeanStackDev from './MeanStack'
 import FullStackDev from './FullStack'
-import './modal.css'
+
 
 const AdminDashboard = (props) => {
     const [candidates, setCandidates] = useState([])
@@ -71,14 +71,13 @@ const AdminDashboard = (props) => {
     return (
         <div>
             <h2>Admin Dashboard</h2>
-            <h1>{candidates.length}</h1>
-            <div class='container'>
-                <div class='col-md-12'>
+            <div className='container'>
+                <div className='col-md-12'>
                     <p>
-                        <Link class='col-md-4' to ='/frontEndDev'>Front-End Developer</Link> |
-                        <Link class='col-md-4' to ='/nodeJsDev'>Node.js Developer</Link> |
-                        <Link class='col-md-4' to = '/meanStackDev'>MEAN Stack Developer</Link> |
-                        <Link class='col-md-4' to = '/fullStackDev'>FULL Stack Developer</Link> |
+                        <Link class='col-md-4' to ='/admindashboard/frontEndDev'>Front-End Developer</Link> |
+                        <Link class='col-md-4' to ='/admindashboard/nodeJsDev'>Node.js Developer</Link> |
+                        <Link class='col-md-4' to = '/admindashboard/meanStackDev'>MEAN Stack Developer</Link> |
+                        <Link class='col-md-4' to = '/admindashboard/fullStackDev'>FULL Stack Developer</Link> |
                     </p>
                 </div>
                 
@@ -102,7 +101,7 @@ const AdminDashboard = (props) => {
                     </div>
             }
             
-            <Route  path = "/frontEndDev" 
+            <Route  path = "/admindashboard/frontEndDev" 
                     exact = {true} 
                     render = {(props) => <FrontEndDev {...props} 
                                             candidates = {candidates}
@@ -112,7 +111,7 @@ const AdminDashboard = (props) => {
                                          />} 
                      />
 
-            <Route  path = "/nodeJsDev" 
+            <Route  path = "/admindashboard/nodeJsDev" 
                     exact = {true}
                     render = {(props) => <NodeJsDev {...props}  candidates = {candidates}
                                                                 handleView = {handleView}
@@ -121,7 +120,7 @@ const AdminDashboard = (props) => {
                                             /> }
                     />
 
-            <Route  path = "/meanStackDev" 
+            <Route  path = "/admindashboard/meanStackDev" 
                     exact = {true}
                     render = {(props) => <MeanStackDev {...props}   candidates = {candidates}
                                                                     handleView = {handleView}
@@ -130,7 +129,7 @@ const AdminDashboard = (props) => {
                                                                     /> }
                     />
 
-            <Route  path = "/fullStackDev" 
+            <Route  path = "/admindashboard/fullStackDev" 
                     exact = {true}
                     render = {(props) => <FullStackDev {...props}   candidates = {candidates}
                                                                     handleView = {handleView}
