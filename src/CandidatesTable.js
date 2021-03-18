@@ -5,7 +5,7 @@ const CandidatesTable = (props) => {
     const {jobTitle, handleView, handleStatusShortlist, handleStatusReject} = props
 
     return (
-        <div  class="table-responsive" >
+        <div>
             <table class='table table-bordered table-hover'>
                 <thead>
                     <tr>

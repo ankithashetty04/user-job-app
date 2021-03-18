@@ -73,30 +73,81 @@ const AdminDashboard = (props) => {
             <h2>Admin Dashboard</h2>
             <div className='container'>
                 <div className='col-md-12'>
-                    <p>
-                        <Link class='col-md-4' to ='/admindashboard/frontEndDev'>Front-End Developer</Link> |
-                        <Link class='col-md-4' to ='/admindashboard/nodeJsDev'>Node.js Developer</Link> |
-                        <Link class='col-md-4' to = '/admindashboard/meanStackDev'>MEAN Stack Developer</Link> |
-                        <Link class='col-md-4' to = '/admindashboard/fullStackDev'>FULL Stack Developer</Link> |
-                    </p>
+                    
+                        <Link  to ='/admindashboard/frontEndDev'>Front-End Developer</Link> |
+                        <Link  to ='/admindashboard/nodeJsDev'>Node.js Developer</Link> |
+                        <Link  to = '/admindashboard/meanStackDev'>MEAN Stack Developer</Link> |
+                        <Link  to = '/admindashboard/fullStackDev'>FULL Stack Developer</Link> |
+                    
                 </div>
                 
             </div>
 
-            {toggle && 
-                    <div id= 'modal'>
-                        <div id = 'modal-data'>
-                            <h3>Name : {modal.name}</h3>
-                            <h3>Email: {modal.email}</h3>
-                            <h3>Skills: {modal.skills}</h3>
-                            <h3>Experience: {modal.experience}</h3>
-                            <h3>Status: {modal.status}</h3>
 
-                            <div id = 'closeBtn'>
-                                <button class = 'btn btn-danger' onClick = { () => {
+            {toggle && 
+                    <div id= 'modal' className='modal'>
+                        <div  className = 'modal-dailog' >
+                            <div className = 'modal-content'>
+                                <div className = 'modal-header'>
+                                    <h3 className = 'modal-title'> {modal.name}</h3>
+                                    <button type="button" 
+                                            onClick = { () => {
+                                                setToggle(false)
+                                            }
+                                            }
+                                            className="btn btn-danger" 
+                                             data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                                </div>
+                            <div className = 'modal-body'>
+                            <div className = 'col-md-12'>
+                               
+                               <div className = 'row '>
+                                   <div className = 'col-md-2'>
+                                       <h3>Email: </h3>
+                                   </div>
+                                   <div className = 'col-md-10'>
+                                       <h3>{modal.email}</h3>
+                                   </div>
+                               </div>
+                              
+                               <div className = 'row'>
+                                   <div className = 'col-md-2'>
+                                       <h3>Skills: </h3>
+                                   </div>
+                                   <div className = 'col-md-10'>
+                                       <h3>{modal.skills}</h3>
+                                   </div>
+                               </div>
+   
+                               <div className = 'row'>
+                                   <div className = 'col-md-2'>
+                                       <h3>Experience:  </h3>
+                                   </div>
+                                   <div className = 'col-md-10'>
+                                       <h3>{modal.experience}</h3>
+                                   </div>
+                               </div>
+                              
+                               <div className = 'row'>
+                                   <div className = 'col-md-2'>
+                                       <h3>Status: </h3>
+                                   </div>
+                                   <div className = 'col-md-10'>
+                                       <h3>{modal.status}</h3>
+                                   </div>
+                               </div>
+                                            
+                               <div id = 'closeBtn'>
+                                <button className = 'btn btn-danger' onClick = { () => {
                                     setToggle(false)
                                 }}>Close</button>
+                                </div>
+
                             </div>
+                            </div>
+                            </div>
+                            
+                           
                         </div>                        
                     </div>
             }

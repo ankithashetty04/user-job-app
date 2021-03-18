@@ -115,7 +115,7 @@ const CandidateForm = (props) => {
                     </div>
                     <div className = 'col-sm-8'>
                         <div>
-                            <select className="form-select form-select-lg" value = {jobTitle} onChange = {handleJobTitleChange}>
+                            <select className=" form-control form-control-lg form-select form-select-lg" value = {jobTitle} onChange = {handleJobTitleChange}>
                                 <option value="select">--Select--</option>
                                 {
                                     jobTitleArr.map((title,i) => {
@@ -144,7 +144,7 @@ const CandidateForm = (props) => {
                         <textarea className = 'form-control form-control-lg' type = 'textarea' name = 'skills' value = {skills} onChange = {handleChange} placeholder = 'Technical Skills' required></textarea><br/>
                     </div>    
                 </div>                           
-                <input type="submit" className= 'btn btn-primary' value = 'send application'/>
+                <input type="submit" className= 'btn btn-primary btn-lg' value = 'send application'/>
             </form>
         </div>    
     </div>
